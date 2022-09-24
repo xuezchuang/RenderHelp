@@ -16,7 +16,8 @@ int main(void)
 
 	// 定义变换矩阵：模型变换，摄像机变换，透视变换
 	Mat4x4f mat_model = matrix_set_identity();	// 模型变换
-	Mat4x4f mat_view = matrix_set_lookat({-0.7, 0, 1.5}, {0,0,0}, {0,0,1});	// 摄像机方位
+	//Mat4x4f mat_view = matrix_set_lookat({-0.7, 0, 1.5}, {0,0,0}, {0,0,1});	// 摄像机方位
+	Mat4x4f mat_view = matrix_set_lookat({ 0, 0, 2 }, { 0,0,0 }, { 0,1,0 });	// 摄像机方位
 	Mat4x4f mat_proj = matrix_set_perspective(3.1415926f * 0.5f, 800 / 600.0, 1.0, 500.0f);
 	Mat4x4f mat_mvp = mat_model * mat_view * mat_proj;	// 综合变换矩阵
 
@@ -47,6 +48,12 @@ int main(void)
 		{ {-1,  1, -1, 1}, {1, 1} },
 		{ {-1, -1, -1, 1}, {0, 1} },
 	};
+	//VertexAttrib vertex[] = {
+	//{ { 1, -1, 1, 1}, {0, 0} },
+	//{ { 1,  1, 1, 1}, {1, 0} },
+	//{ {-1,  1, 1, 1}, {1, 1} },
+	//{ {-1, -1, 1, 1}, {0, 1} },
+	//};
 
 	vs_input[0] = vertex[0];
 	vs_input[1] = vertex[1];

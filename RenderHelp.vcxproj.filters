@@ -4,6 +4,6 @@
     <ClInclude Include="RenderHelp.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="sample_05_model.cpp" />
+    <ClCompile Include="sample_03_box.cpp" />
   </ItemGroup>
 </Project>

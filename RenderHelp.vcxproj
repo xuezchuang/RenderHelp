@@ -22,7 +22,7 @@
     <ClInclude Include="RenderHelp.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="sample_05_model.cpp" />
+    <ClCompile Include="sample_03_box.cpp" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{433E9031-0101-4ADF-A6DA-283375FD1898}</ProjectGuid>

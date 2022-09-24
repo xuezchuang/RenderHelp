@@ -1025,6 +1025,7 @@ public:
 		int32_t y1 = Between(0, _h - 1, fy >> 16);
 		int32_t x2 = Between(0, _w - 1, x1 + 1);
 		int32_t y2 = Between(0, _h - 1, y1 + 1);
+		//备注自我理解:(fx>>8) & 0xff = 的是小数点*0xff的长度;也就是相邻步长的小数点在0xff纹理中的步长.
 		int32_t dx = (fx >> 8) & 0xff;
 		int32_t dy = (fy >> 8) & 0xff;
 		if (_w <= 0 || _h <= 0) return 0;
@@ -1084,17 +1085,13 @@ protected:
 		int32_t distxiy = (distx << 8) - distxy;  /* distx * (256 - disty) */
 		int32_t distixy = (disty << 8) - distxy;  /* disty * (256 - distx) */
 		int32_t distixiy = 256 * 256 - (disty << 8) - (distx << 8) + distxy;
-		r = (tl & 0x000000ff) * distixiy + (tr & 0x000000ff) * distxiy
-		  + (bl & 0x000000ff) * distixy  + (br & 0x000000ff) * distxy;
-		f = (tl & 0x0000ff00) * distixiy + (tr & 0x0000ff00) * distxiy
-		  + (bl & 0x0000ff00) * distixy  + (br & 0x0000ff00) * distxy;
+		r = (tl & 0x000000ff) * distixiy + (tr & 0x000000ff) * distxiy + (bl & 0x000000ff) * distixy  + (br & 0x000000ff) * distxy;
+		f = (tl & 0x0000ff00) * distixiy + (tr & 0x0000ff00) * distxiy + (bl & 0x0000ff00) * distixy  + (br & 0x0000ff00) * distxy;
 		r |= f & 0xff000000;
 		tl >>= 16; tr >>= 16; bl >>= 16; br >>= 16; r >>= 16;
-		f = (tl & 0x000000ff) * distixiy + (tr & 0x000000ff) * distxiy
-		  + (bl & 0x000000ff) * distixy  + (br & 0x000000ff) * distxy;
+		f = (tl & 0x000000ff) * distixiy + (tr & 0x000000ff) * distxiy + (bl & 0x000000ff) * distixy  + (br & 0x000000ff) * distxy;
 		r |= f & 0x00ff0000;
-		f = (tl & 0x0000ff00) * distixiy + (tr & 0x0000ff00) * distxiy
-		  + (bl & 0x0000ff00) * distixy  + (br & 0x0000ff00) * distxy;
+		f = (tl & 0x0000ff00) * distixiy + (tr & 0x0000ff00) * distxiy + (bl & 0x0000ff00) * distixy  + (br & 0x0000ff00) * distxy;
 		r |= f & 0xff000000;
 		return r;
 	}
@@ -1326,7 +1323,8 @@ public:
 		float s = Abs(vector_cross(p1 - p0, p2 - p0));
 		if (s <= 0) return false;
 
-		// 三角形填充时，左面和上面的边上的点需要包括，右方和下方边上的点不包括
+		//for:https://www.zhihu.com/question/281624747/answer/421344170
+		// Top-Left Fill Rule:三角形填充时，左面和上面的边上的点需要包括，右方和下方边上的点不包括
 		// 先判断是否是 TopLeft，判断出来后会和下方 Edge Equation 一起决策
 		bool TopLeft01 = IsTopLeft(p0, p1);
 		bool TopLeft12 = IsTopLeft(p1, p2);
